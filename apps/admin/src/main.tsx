@@ -7,8 +7,6 @@ import { request } from './request';
 
 const element = document.getElementById('root')!;
 
-console.log('main');
-
 ReactDOM.createRoot(element).render(
   <QueryClientProvider client={queryClient}>
     <App routes={routes} request={request} />

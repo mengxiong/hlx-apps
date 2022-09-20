@@ -16,10 +16,10 @@ export default defineConfig({
     },
   },
   server: {
-    port: 3010,
+    port: 3103,
     proxy: {
       '/api': {
-        target: 'http://jsonplaceholder.typicode.com',
+        target: 'http://localhost:3300',
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/api/, ''),
       },

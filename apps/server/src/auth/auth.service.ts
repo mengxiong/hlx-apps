@@ -1,14 +1,11 @@
-import {
-  BadRequestException,
-  Injectable,
-  UnauthorizedException,
-} from '@nestjs/common';
+import { BadRequestException, Injectable, UnauthorizedException } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
 import { User } from '@prisma/client';
 import * as bcrypt from 'bcryptjs';
 import { omit } from 'lodash';
-import { UserService } from 'src/user/user.service';
+import { Token } from '@hlx/dto';
+import { UserService } from '../user/user.service';
 import { LoginDto } from './dto/login.dto';
 import { RegisterDto } from './dto/register.dto';
 
@@ -21,7 +18,7 @@ export class AuthService {
   constructor(
     private jwtService: JwtService,
     private config: ConfigService,
-    private userService: UserService,
+    private userService: UserService
   ) {}
 
   public async register({ phone, password }: RegisterDto) {
@@ -55,7 +52,7 @@ export class AuthService {
       const accessToken = this.generateAccessToken(user);
       return { accessToken };
     } catch (error) {
-      throw new UnauthorizedException(error.message);
+      throw new UnauthorizedException();
     }
   }
 
@@ -73,7 +70,7 @@ export class AuthService {
     });
   }
 
-  private generateToken(user: User) {
+  private generateToken(user: User): Token {
     const accessToken = this.generateAccessToken(user);
     const refreshToken = this.generateRefreshToken(user);
 

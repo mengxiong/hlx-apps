@@ -1,4 +1,5 @@
 import React from 'react';
+import { Token } from '@hlx/dto';
 
 interface AuthContextType<T = any> {
   token: T;
@@ -9,6 +10,6 @@ interface AuthContextType<T = any> {
 
 export const AuthContext = React.createContext<AuthContextType>(null!);
 
-export function useAuth<T = any>(): AuthContextType<T> {
+export function useAuth<T = Token>(): AuthContextType<T> {
   return React.useContext(AuthContext);
 }

@@ -5,6 +5,11 @@ module.exports = {
     es6: true,
     node: true,
   },
+  parserOptions: {
+    project: 'tsconfig.json',
+    tsconfigRootDir: __dirname,
+    sourceType: 'module',
+  },
   extends: [
     'airbnb',
     'airbnb-typescript',

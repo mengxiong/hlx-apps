@@ -1,6 +1,9 @@
 {
-  "compilerOptions": {},
-  "extends": "../../tsconfig.base.json",
+  "extends": "../../tsconfig.json",
+  "compilerOptions": {
+    "declaration": false,
+    "outDir": "../../dist/apps/server"
+  },
   "include": ["**/*.ts"],
-  "types": ["node"]
+  "exclude": ["node_modules", "dist", "test", "**/*spec.ts"]
 }

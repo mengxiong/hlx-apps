@@ -12,16 +12,16 @@ export function RequestInterceptor({ children, request }: RequestInterceptorProp
   const { getToken, signout } = useAuth();
 
   useLayoutEffect(() => {
-    request.interceptors.request.use((config) => {
+    const requestInterceptor = request.interceptors.request.use((config) => {
       const token = getToken();
       if (token && token.accessToken) {
-        config.headers!['x-Authorization'] = token.accessToken;
+        config.headers!.authorization = `${token.tokenType} ${token.accessToken}`;
       }
       return config;
     });
-    request.interceptors.response.use(
+    const responseInterceptor = request.interceptors.response.use(
       (res) => {
-        return res.data;
+        return Promise.resolve(res.data);
       },
       (err) => {
         const msg = err.response?.data?.message || err.message;
@@ -32,6 +32,10 @@ export function RequestInterceptor({ children, request }: RequestInterceptorProp
         return Promise.reject(err);
       }
     );
+    return () => {
+      request.interceptors.request.eject(requestInterceptor);
+      request.interceptors.response.eject(responseInterceptor);
+    };
   }, []);
 
   return children;
