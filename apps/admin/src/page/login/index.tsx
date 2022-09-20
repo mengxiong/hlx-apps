@@ -35,14 +35,11 @@ export function LoginPage() {
 
   return (
     <Box
-      sx={(theme) => ({
+      sx={() => ({
         display: 'flex',
         height: '100%',
         alignItems: 'flex-start',
         backgroundColor: '#fff',
-        [theme.breakpoints.down(444)]: {
-          backgroundImage: 'none',
-        },
       })}
     >
       <Container
