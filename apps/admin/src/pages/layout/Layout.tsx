@@ -1,5 +1,5 @@
 import { Outlet } from 'react-router-dom';
-import { Box, Drawer, IconButton, useMediaQuery, useTheme } from '@mui/material';
+import { Box, Container, Drawer, IconButton, useMediaQuery, useTheme } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import { useState } from 'react';
 import { Header } from './Header';
@@ -42,7 +42,9 @@ export function Layout() {
             <Slider />
           </Drawer>
         )}
-        <Outlet />
+        <Container sx={{ flex: 1, overflow: 'auto' }}>
+          <Outlet />
+        </Container>
       </Box>
     </Box>
   );

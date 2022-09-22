@@ -1489,7 +1489,7 @@ packages:
     dev: true
 
   /@types/express-serve-static-core/4.17.31:
-    resolution: {integrity: sha512-gstzbTWro2/nFed1WXtf+TtrpwxH7Ggs4RLYTLbeVgIkUQOI3WG/JKjgeOU1zXDvezllupjrf8OPIdvTbIaVOQ==}
+    resolution: {integrity: sha512-gstzbTWro2/nFed1WXtf+TtrpwxH7Ggs4RLYTLbeVgIkUQOI3WG/JKjgeOU1zXDvezllupjrf8OPIdvTbIaVOQ==, tarball: '@types/express-serve-static-core/-/express-serve-static-core-4.17.31.tgz'}
     deprecated: '[WARNING] Use 4.17.30 instead of 4.17.31, reason: https://github.com/DefinitelyTyped/DefinitelyTyped/pull/62240/files'
     dependencies:
       '@types/node': 17.0.45

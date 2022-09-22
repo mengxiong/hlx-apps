@@ -1,23 +1,15 @@
-import {
-  Controller,
-  Get,
-  Post,
-  Body,
-  Patch,
-  Param,
-  Delete,
-} from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { CreateTextbookDto } from '@hlx/dto';
 import { TextbookService } from './textbook.service';
-import { CreateTextbookDto } from './dto/create-textbook.dto';
-import { UpdateTextbookDto } from './dto/update-textbook.dto';
-import { Prisma } from '@prisma/client';
+import { Roles } from '../auth/guard/roles';
 
 @Controller('textbook')
 export class TextbookController {
   constructor(private readonly textbookService: TextbookService) {}
 
+  @Roles('ADMIN')
   @Post()
-  create(@Body() createTextbookDto: Prisma.TextbookCreateArgs) {
+  create(@Body() createTextbookDto: CreateTextbookDto) {
     return this.textbookService.create(createTextbookDto);
   }
 
@@ -32,10 +24,7 @@ export class TextbookController {
   }
 
   @Patch(':id')
-  update(
-    @Param('id') id: string,
-    @Body() updateTextbookDto: UpdateTextbookDto,
-  ) {
+  update(@Param('id') id: string, @Body() updateTextbookDto: any) {
     return this.textbookService.update(+id, updateTextbookDto);
   }
 

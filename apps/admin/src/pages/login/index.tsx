@@ -1,12 +1,13 @@
-import { Avatar, Box, Container, TextField, Typography } from '@mui/material';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useMutation } from '@tanstack/react-query';
+import { useAuth } from '@hlx/frame';
+import { Avatar, Box, Container, TextField, Typography } from '@mui/material';
+import SaveIcon from '@mui/icons-material/Save';
+import { LoadingButton } from '@mui/lab';
 import { useForm } from 'react-hook-form';
 import { LoginDto } from '@hlx/dto';
-import SaveIcon from '@mui/icons-material/Save';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
-import { LoadingButton } from '@mui/lab';
-import { useAuth } from '@hlx/frame';
+
 import { login } from '../../api/auth';
 
 export function LoginPage() {
@@ -33,14 +34,16 @@ export function LoginPage() {
     },
   });
 
+  const obj = register('phone', { required: '账号不能为空' });
+
   return (
     <Box
-      sx={() => ({
+      sx={{
         display: 'flex',
         height: '100%',
         alignItems: 'flex-start',
         backgroundColor: '#fff',
-      })}
+      }}
     >
       <Container
         maxWidth="xs"
@@ -62,11 +65,10 @@ export function LoginPage() {
         <Box
           component="form"
           noValidate
-          onSubmit={handleSubmit((args) => loginMutation.mutate(args))}
+          onSubmit={handleSubmit((data) => loginMutation.mutate(data))}
         >
           <TextField
             margin="normal"
-            variant="outlined"
             required
             fullWidth
             label="账号"
@@ -74,11 +76,10 @@ export function LoginPage() {
             autoFocus
             helperText={errors.phone?.message}
             error={!!errors.phone}
-            {...register('phone', { required: '账号不能为空' })}
+            {...obj}
           ></TextField>
-          <TextField
+          {/* <TextField
             margin="normal"
-            variant="outlined"
             required
             fullWidth
             label="密码"
@@ -87,7 +88,7 @@ export function LoginPage() {
             error={!!errors.password}
             helperText={errors.password?.message}
             {...register('password', { required: '密码不能为空' })}
-          ></TextField>
+          ></TextField> */}
           <LoadingButton
             sx={{ mt: 2 }}
             variant="contained"

@@ -1,7 +1,5 @@
-import CssBaseline from '@mui/material/CssBaseline';
 import { HashRouter, RouteObject } from 'react-router-dom';
 import { SnackbarProvider } from 'notistack';
-import React from 'react';
 import { AxiosInstance } from 'axios';
 import { AuthProvider } from './AuthProvider';
 import { RequestInterceptor } from './RequestInterceptor';
@@ -17,19 +15,16 @@ export interface AppProps {
 
 export function App({ routes, request, basename = '/' }: AppProps) {
   return (
-    <React.StrictMode>
-      <CssBaseline />
-      <HashRouter basename={basename}>
-        <AuthProvider>
-          <RequestInterceptor request={request}>
-            <Routes routes={routes}></Routes>
-          </RequestInterceptor>
-        </AuthProvider>
-      </HashRouter>
+    <HashRouter basename={basename}>
+      <AuthProvider>
+        <RequestInterceptor request={request}>
+          <Routes routes={routes}></Routes>
+        </RequestInterceptor>
+      </AuthProvider>
       <SnackbarProvider
         autoHideDuration={1500}
         anchorOrigin={{ vertical: 'bottom', horizontal: 'left' }}
       ></SnackbarProvider>
-    </React.StrictMode>
+    </HashRouter>
   );
 }

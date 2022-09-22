@@ -12,8 +12,8 @@ interface Item {
 
 export const navList: Item[] = [
   {
-    key: '/textbooks',
-    label: '已选课程',
+    key: '/textbook',
+    label: '课程管理',
     icon: <MenuBookIcon />,
   },
   // {
@@ -48,7 +48,6 @@ export function Slider({ onClick }: { onClick?: VoidFunction }) {
     <List
       sx={{
         width: 240,
-        px: 2,
       }}
       component="nav"
     >

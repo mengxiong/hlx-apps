@@ -1,1 +1,1 @@
-const c = '';
+export * from './src/Modal';

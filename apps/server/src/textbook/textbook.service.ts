@@ -1,13 +1,12 @@
+import { CreateTextbookDto } from '@hlx/dto';
 import { Injectable } from '@nestjs/common';
-import { Prisma } from '@prisma/client';
 import { PrismaService } from '../prisma/prisma.service';
-import { UpdateTextbookDto } from './dto/update-textbook.dto';
 
 @Injectable()
 export class TextbookService {
   constructor(private prisma: PrismaService) {}
 
-  create(createTextbookDto: Prisma.TextbookCreateArgs) {
+  create(createTextbookDto: CreateTextbookDto) {
     return this.prisma.textbook.create(createTextbookDto);
   }
 
@@ -19,7 +18,7 @@ export class TextbookService {
     return `This action returns a #${id} textbook`;
   }
 
-  update(id: number, updateTextbookDto: UpdateTextbookDto) {
+  update(id: number, updateTextbookDto: any) {
     return `This action updates a #${id} textbook`;
   }
 
