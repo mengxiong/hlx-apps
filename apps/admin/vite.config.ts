@@ -13,6 +13,7 @@ export default defineConfig({
       src: resolve(__dirname, './src'),
       '@hlx/frame': resolve(__dirname, '../../libs/frame/index.ts'),
       '@hlx/components': resolve(__dirname, '../../libs/components/index.ts'),
+      '@hlx/hooks': resolve(__dirname, '../../libs/hooks/index.ts'),
     },
   },
   server: {

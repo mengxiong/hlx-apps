@@ -24,7 +24,8 @@
     "paths": {
       "@hlx/frame": ["libs/frame/index.ts"],
       "@hlx/components": ["libs/components/index.ts"],
-      "@hlx/dto": ["libs/dto/index.ts"]
+      "@hlx/dto": ["libs/dto/index.ts"],
+      "@hlx/hooks": ["libs/hooks/index.ts"]
     }
   }
 }
