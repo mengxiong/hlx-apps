@@ -1,5 +1,5 @@
 import { AxiosInstance } from 'axios';
-import { useLayoutEffect } from 'react';
+import { useLayoutEffect, useRef } from 'react';
 import { enqueueSnackbar } from 'notistack';
 import { useAuth } from './AuthContext';
 
@@ -9,13 +9,18 @@ export interface RequestInterceptorProps {
 }
 
 export function RequestInterceptor({ children, request }: RequestInterceptorProps) {
-  const { getToken, signout } = useAuth();
+  const { token, signout } = useAuth();
+
+  const tokenRef = useRef(token);
+  useLayoutEffect(() => {
+    tokenRef.current = token;
+  });
 
   useLayoutEffect(() => {
     const requestInterceptor = request.interceptors.request.use((config) => {
-      const token = getToken();
-      if (token && token.accessToken) {
-        config.headers!.authorization = `${token.tokenType} ${token.accessToken}`;
+      const currentToken = tokenRef.current;
+      if (currentToken && currentToken.accessToken) {
+        config.headers!.authorization = `${currentToken.tokenType} ${currentToken.accessToken}`;
       }
       return config;
     });

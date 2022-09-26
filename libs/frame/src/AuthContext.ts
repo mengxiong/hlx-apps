@@ -3,7 +3,6 @@ import { Token } from '@hlx/dto';
 
 interface AuthContextType<T = any> {
   token: T;
-  getToken: () => T;
   signin: (token: T) => void;
   signout: () => void;
 }
