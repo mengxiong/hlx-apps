@@ -5,7 +5,7 @@ export interface UseMuiFormProps<T> {
   items: Array<TextFieldRule<T>>;
 }
 
-type Rule<Type, T> = { type?: Type } & Pick<
+type Rule<Type, T> = { fieldType?: Type } & Pick<
   UseControllerProps<T>,
   'name' | 'rules' | 'defaultValue'
 >;
@@ -15,7 +15,7 @@ type TextFieldRule<T> = Rule<'textfield', T> & TextFieldProps;
 export function useMuiForm<T>({ items }: UseMuiFormProps<T>) {
   const { handleSubmit, control } = useForm<T>();
 
-  const formItems = items.map(({ rules, name, defaultValue, type, ...restProps }) => {
+  const formItems = items.map(({ rules, name, defaultValue, fieldType, ...restProps }) => {
     return (
       <Controller
         key={name}
@@ -24,14 +24,18 @@ export function useMuiForm<T>({ items }: UseMuiFormProps<T>) {
         defaultValue={defaultValue}
         rules={rules}
         render={({ field, fieldState }) => {
-          switch (type) {
+          switch (fieldType) {
             default:
               return (
                 <TextField
                   margin="normal"
                   fullWidth
+                  required={!!rules.required}
                   helperText={fieldState.error?.message}
                   error={!!fieldState.error}
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
                   {...restProps}
                   {...field}
                 ></TextField>
