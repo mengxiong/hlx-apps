@@ -30,7 +30,8 @@ export function useMuiForm<T>({ items }: UseMuiFormProps<T>) {
                 <TextField
                   margin="normal"
                   fullWidth
-                  required={!!rules.required}
+                  variant="standard"
+                  required={!!rules?.required}
                   helperText={fieldState.error?.message}
                   error={!!fieldState.error}
                   InputLabelProps={{

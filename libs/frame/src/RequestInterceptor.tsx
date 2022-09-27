@@ -4,11 +4,10 @@ import { enqueueSnackbar } from 'notistack';
 import { useAuth } from './AuthContext';
 
 export interface RequestInterceptorProps {
-  children: React.ReactElement;
   request: AxiosInstance;
 }
 
-export function RequestInterceptor({ children, request }: RequestInterceptorProps) {
+export function RequestInterceptor({ request }: RequestInterceptorProps) {
   const { token, signout } = useAuth();
 
   const tokenRef = useRef(token);
@@ -43,5 +42,5 @@ export function RequestInterceptor({ children, request }: RequestInterceptorProp
     };
   }, []);
 
-  return children;
+  return null;
 }

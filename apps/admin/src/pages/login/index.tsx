@@ -6,15 +6,20 @@ import { LoadingButton } from '@mui/lab';
 import { LoginDto } from '@hlx/dto';
 import { useMuiForm } from '@hlx/hooks';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 import { login } from '../../api/auth';
 
 export function LoginPage() {
   const { signin } = useAuth();
+  const location = useLocation();
+  const navigate = useNavigate();
 
   const loginMutation = useMutation(login, {
     onSuccess(data) {
       signin(data);
+      const from = (location.state as any)?.from || '/';
+      navigate(from, { replace: true });
     },
   });
 

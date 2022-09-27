@@ -1,44 +1,34 @@
-// import PersonIcon from '@mui/icons-material/Person';
-import MenuBookIcon from '@mui/icons-material/MenuBook';
-import HistoryIcon from '@mui/icons-material/History';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { RouteObject, UNSAFE_DataRouterContext, useLocation, useNavigate } from 'react-router-dom';
 import { List, ListItemButton, ListItem, ListItemIcon, ListItemText } from '@mui/material';
+import { useContext } from 'react';
+import type { SidebarMetadata } from '../routess';
 
-interface Item {
-  key: string;
-  label: string;
-  icon?: React.ReactNode;
+interface Sidebar extends SidebarMetadata {
+  path: string;
 }
 
-export const navList: Item[] = [
-  {
-    key: '/textbook',
-    label: '课程管理',
-    icon: <MenuBookIcon />,
-  },
-  // {
-  //   key: '/user',
-  //   label: '本人信息',
-  //   icon: <PersonIcon />,
-  // },
-  {
-    key: '/history',
-    label: '学习记录',
-    icon: <HistoryIcon />,
-  },
-  {
-    key: '/feedback',
-    label: '问题反馈',
-    icon: <HistoryIcon />,
-  },
-];
+const getSidebar = (routes: RouteObject[], parentPath = '', result: Sidebar[] = []) => {
+  routes.forEach((route) => {
+    const path = `${parentPath}/${route.path || ''}`.replace(/\/\//g, '/');
+    if (route.handle?.sidebar) {
+      result.push({ path, ...route.handle.sidebar });
+    }
+    if (route.children) {
+      getSidebar(route.children, path, result);
+    }
+  });
+  return result;
+};
 
 export function Slider({ onClick }: { onClick?: VoidFunction }) {
   const location = useLocation();
   const navigate = useNavigate();
+  const data = useContext(UNSAFE_DataRouterContext).router.routes;
 
-  const handleClick = (item: Item) => {
-    navigate(item.key);
+  const sidebar = getSidebar(data);
+
+  const handleClick = (item: Sidebar) => {
+    navigate(item.path);
     onClick?.();
   };
 
@@ -51,10 +41,10 @@ export function Slider({ onClick }: { onClick?: VoidFunction }) {
       }}
       component="nav"
     >
-      {navList.map((item) => (
-        <ListItem key={item.key} disablePadding>
+      {sidebar.map((item) => (
+        <ListItem key={item.path} disablePadding>
           <ListItemButton
-            selected={selectedKey === item.key}
+            selected={selectedKey === item.path}
             onClick={() => handleClick(item)}
             sx={(theme) => ({
               '&.Mui-selected': {
@@ -64,7 +54,7 @@ export function Slider({ onClick }: { onClick?: VoidFunction }) {
             })}
           >
             <ListItemIcon sx={{ minWidth: 35, color: 'inherit' }}>{item.icon}</ListItemIcon>
-            <ListItemText primary={item.label} />
+            <ListItemText primary={item.name} />
           </ListItemButton>
         </ListItem>
       ))}
