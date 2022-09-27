@@ -1,17 +1,18 @@
 import { RouteObject, UNSAFE_DataRouterContext, useLocation, useNavigate } from 'react-router-dom';
 import { List, ListItemButton, ListItem, ListItemIcon, ListItemText } from '@mui/material';
 import { useContext } from 'react';
-import type { SidebarMetadata } from '../routess';
 
-interface Sidebar extends SidebarMetadata {
+interface Sidebar {
   path: string;
+  name: string;
+  icon?: React.ReactNode;
 }
 
 const getSidebar = (routes: RouteObject[], parentPath = '', result: Sidebar[] = []) => {
   routes.forEach((route) => {
     const path = `${parentPath}/${route.path || ''}`.replace(/\/\//g, '/');
-    if (route.handle?.sidebar) {
-      result.push({ path, ...route.handle.sidebar });
+    if (route.handle?.nav) {
+      result.push({ path, name: route.handle.nav, icon: route.handle.icon });
     }
     if (route.children) {
       getSidebar(route.children, path, result);

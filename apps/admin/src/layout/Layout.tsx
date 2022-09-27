@@ -4,6 +4,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import { useState } from 'react';
 import { Header } from './Header';
 import { Slider } from './Slider';
+import { Breadcrumbs } from './Breadcrumbs';
 
 export function Layout() {
   const theme = useTheme();
@@ -42,7 +43,8 @@ export function Layout() {
             <Slider />
           </Drawer>
         )}
-        <Container sx={{ flex: 1, overflow: 'auto' }}>
+        <Container sx={{ flex: 1, overflow: 'auto', py: 2 }}>
+          <Breadcrumbs />
           <Outlet />
         </Container>
       </Box>

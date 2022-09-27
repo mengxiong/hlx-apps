@@ -5,17 +5,15 @@ import { LoginPage } from './pages/login';
 import { Layout } from './layout/Layout';
 import { CreateTextbook } from './pages/textbook/CreateTextbook';
 
-export interface SidebarMetadata {
-  name: string;
+export interface RouteHandle {
+  nav?: string;
   icon?: React.ReactNode;
+  breadcrumb?: string | boolean;
 }
 
 declare module 'react-router-dom' {
   interface RouteObject {
-    handle?: {
-      sidebar?: SidebarMetadata;
-      breadcrumbName?: string;
-    };
+    handle?: RouteHandle;
   }
 }
 
@@ -32,7 +30,11 @@ export const routes: RouteObject[] = [
       {
         path: 'textbook',
         element: <CreateTextbook />,
-        handle: { sidebar: { name: '课程管理', icon: <MenuBookIcon /> } },
+        handle: {
+          nav: '课程管理',
+          icon: <MenuBookIcon />,
+          breadcrumb: true,
+        },
       },
     ],
   },

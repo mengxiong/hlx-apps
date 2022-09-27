@@ -1,40 +1,32 @@
 import { Breadcrumbs as BreadcrumbComponent, Link, Typography } from '@mui/material';
-import { matchRoutes, useLocation } from 'react-router-dom';
-import { routesConfig } from 'src/Routes';
-
-export interface BreadcrumbsProps {
-  replaceBreadcrumbs?: (breadcrumbs: BreadcrumbLink[]) => BreadcrumbLink[];
-}
+import { useMatches } from 'react-router-dom';
+import type { RouteHandle } from '../routess';
 
 export interface BreadcrumbLink {
   name: string;
   path: string;
 }
 
-export function Breadcrumbs({ replaceBreadcrumbs }: BreadcrumbsProps) {
-  const location = useLocation();
+export function Breadcrumbs() {
+  const matches = useMatches().filter((v) => (v.handle as RouteHandle)?.breadcrumb);
 
-  let breadcrumbs: BreadcrumbLink[] = (matchRoutes(routesConfig, location) || [])
-    .filter((v) => v.route.breadcrumbName)
-    .map((cur) => {
-      return { name: cur.route.breadcrumbName!, path: cur.pathname };
-    });
+  const list = matches.map((item, index) => {
+    const { breadcrumb, nav } = item.handle as RouteHandle;
+    let name = breadcrumb;
+    if (breadcrumb === true) {
+      name = nav;
+    }
 
-  if (replaceBreadcrumbs) {
-    breadcrumbs = replaceBreadcrumbs(breadcrumbs);
-  }
-
-  const list = breadcrumbs.map((item, index) => {
-    if (index !== breadcrumbs.length - 1) {
+    if (index !== matches.length - 1) {
       return (
-        <Link underline="hover" key={item.path} color="inherit" href={item.path}>
-          {item.name}
+        <Link underline="hover" key={item.pathname} color="inherit" href={item.pathname}>
+          {name}
         </Link>
       );
     }
     return (
-      <Typography variant="h6" key={item.path} fontSize="1rem" color="text.primary">
-        {item.name}
+      <Typography variant="h6" key={item.pathname} fontSize="1rem" color="text.primary">
+        {name}
       </Typography>
     );
   });
