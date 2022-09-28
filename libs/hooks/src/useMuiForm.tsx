@@ -30,7 +30,7 @@ export function useMuiForm<T>({ items }: UseMuiFormProps<T>) {
                 <TextField
                   margin="normal"
                   fullWidth
-                  variant="standard"
+                  variant="outlined"
                   required={!!rules?.required}
                   helperText={fieldState.error?.message}
                   error={!!fieldState.error}

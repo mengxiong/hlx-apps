@@ -58,10 +58,11 @@ specifiers:
   prisma: ^4.3.1
   react: ^18.0.0
   react-dom: ^18.0.0
+  react-dropzone: ^14.2.2
   react-error-boundary: ^3.1.4
   react-hook-form: ^7.31.3
   react-infinite-scroller: ^1.2.6
-  react-router-dom: ^6.3.0
+  react-router-dom: ^6.4.0
   react-string-replace: ^1.1.0
   react-use: ^17.4.0
   reflect-metadata: ^0.1.13
@@ -107,6 +108,7 @@ dependencies:
   prisma: 4.3.1
   react: 18.2.0
   react-dom: 18.2.0_react@18.2.0
+  react-dropzone: 14.2.2_react@18.2.0
   react-error-boundary: 3.1.4_react@18.2.0
   react-hook-form: 7.35.0_react@18.2.0
   react-infinite-scroller: 1.2.6_react@18.2.0
@@ -2059,6 +2061,11 @@ packages:
     hasBin: true
     dev: true
 
+  /attr-accept/2.2.2:
+    resolution: {integrity: sha512-7prDjvt9HmqiZ0cl5CRjtS84sEyhsHP2coDkaZKRKVfCDo9s7iw7ChVmar78Gu9pC4SoR/28wFu/G5JJhTnqEg==}
+    engines: {node: '>=4'}
+    dev: false
+
   /axe-core/4.4.3:
     resolution: {integrity: sha512-32+ub6kkdhhWick/UjvEwRchgoetXqTK14INLqbGm5U2TzBkBNF3nQtLYm8ovxSkQWArjEQvftCKryjZaATu3w==}
     engines: {node: '>=4'}
@@ -3421,6 +3428,13 @@ packages:
     dependencies:
       flat-cache: 3.0.4
     dev: true
+
+  /file-selector/0.6.0:
+    resolution: {integrity: sha512-QlZ5yJC0VxHxQQsQhXvBaC7VRJ2uaxTf+Tfpu4Z/OcVQJVpZO+DGU0rkoVW5ce2SccxugvpBJoMvUs59iILYdw==}
+    engines: {node: '>= 12'}
+    dependencies:
+      tslib: 2.4.0
+    dev: false
 
   /fill-range/7.0.1:
     resolution: {integrity: sha512-qOo9F+dMUmC2Lcb4BbVvnKJxTPjCm+RRpe4gDuGrzkL7mEVl/djYSu2OdQ2Pa302N4oqkSg9ir6jaLWJ2USVpQ==}
@@ -4885,6 +4899,18 @@ packages:
       loose-envify: 1.4.0
       react: 18.2.0
       scheduler: 0.23.0
+    dev: false
+
+  /react-dropzone/14.2.2_react@18.2.0:
+    resolution: {integrity: sha512-5oyGN/B5rNhop2ggUnxztXBQ6q6zii+OMEftPzsxAR2hhpVWz0nAV+3Ktxo2h5bZzdcCKrpd8bfWAVsveIBM+w==}
+    engines: {node: '>= 10.13'}
+    peerDependencies:
+      react: '>= 16.8 || 18.0.0'
+    dependencies:
+      attr-accept: 2.2.2
+      file-selector: 0.6.0
+      prop-types: 15.8.1
+      react: 18.2.0
     dev: false
 
   /react-error-boundary/3.1.4_react@18.2.0:
