@@ -26,6 +26,13 @@ export const platforms = [
 // publishedAt DateTime?
 // units       Unit[]
 
+// export type Unit = {
+//   id: number
+//   sort: number
+//   title: string
+//   textbookId: number
+// }
+
 // id: number
 // sort: number
 // character: string | null
@@ -37,11 +44,78 @@ export const platforms = [
 // video: string | null
 // unitId: number
 
-const map = {
-  角色: 'character',
-} as const;
-
 // 科目类型	一级目录	二级目录	序号	角色	原文	音频文件名	视频文件名	图片文件名	译文	解析	填空题目文字	填空题目文件名	填空题答案	填空题提示文字	填空题提示文件名	选择题目文字	选择题目文件名	选择题答案	选择题提示文字	选择题提示文件名	A	B	C	D	E	F
+
+const unitKeyMap = {
+  title: '二级目录',
+};
+
+const sentenceKeyMap = {
+  character: '角色',
+  content: '原文',
+  translation: '译文',
+  analysis: '解析',
+  image: '图片文件名',
+  audio: '音频文件名',
+  video: '视频文件名',
+  completion: {
+    title: '填空题目文字',
+    answer: '填空题答案',
+    file: '填空题目文件名',
+    hintText: '填空题提示文字',
+    hintFile: '填空题提示文件名',
+  },
+  choice: {
+    title: '选择题目文字',
+    answer: '选择题答案',
+    file: '选择题目文件名',
+    hintText: '选择题提示文字',
+    hintFile: '选择题提示文件名',
+    options: ['A', 'B', 'C', 'D', 'E', 'F'],
+  },
+};
+
+const arr: any[] = [];
+const units = new Map();
+for (let i = 0; i < arr.length; i++) {
+  const item = arr[i];
+  const unitTitle = item[unitKeyMap.title];
+  if (unitTitle) {
+    const getObjByMap = (map: Record<string, any>, source: any) => {
+      const result: any = {};
+      Object.entries(map).forEach(([key, value]) => {
+        if (Array.isArray(value)) {
+          result[key] = value.map((v) => value[v]).filter(Boolean);
+        } else if (typeof value === 'object') {
+          result[key] = getObjByMap(value, source);
+        } else {
+          result[key] = source[value];
+        }
+      });
+      return result;
+    };
+    const sentence = getObjByMap(sentenceKeyMap, item);
+    if (sentence.completion.title) {
+      sentence.completion = { create: sentence.completion };
+    }
+    if (sentence.choice.title) {
+      sentence.choice = { create: sentence.choice };
+    }
+    if (!units.get(unitTitle)) {
+      units.set(unitTitle, []);
+    }
+    const unit = units.get(unitTitle);
+    sentence.sort = unit.length + 1;
+    unit.push(sentence);
+  }
+}
+const result = [...units].map(([key, value], i) => {
+  return {
+    title: key,
+    sort: i + 1,
+    sentence: { create: value },
+  };
+});
 
 export function CreateTextbook(props: CreateTextbookProps) {
   const { handleSubmit, formItems } = useMuiForm<Textbook>({
@@ -91,6 +165,11 @@ export function CreateTextbook(props: CreateTextbookProps) {
     console.log(workbook);
     const json = utils.sheet_to_json(workbook.Sheets[workbook.SheetNames[0]]);
     console.log(json);
+
+    const unitMap = new Map();
+    for (let i = 0; i < json.length; i++) {
+      const element = json[i];
+    }
   }
 
   // const submit = handleSubmit((data) => {
