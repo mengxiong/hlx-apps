@@ -1,5 +1,5 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
-import { CreateTextbookDto } from '@hlx/dto';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Query } from '@nestjs/common';
+import { CreateTextbookDto, ListAllEntities } from '@hlx/dto';
 import { TextbookService } from './textbook.service';
 import { Roles } from '../auth/guard/roles';
 
@@ -14,8 +14,11 @@ export class TextbookController {
   }
 
   @Get()
-  findAll() {
-    return this.textbookService.findAll();
+  findAll(@Query() query: ListAllEntities) {
+    return this.textbookService.findAll({
+      take: query.limit || 10,
+      skip: query.offset || 0,
+    });
   }
 
   @Get(':id')

@@ -1,5 +1,7 @@
 import { CreateTextbookDto } from '@hlx/dto';
 import { Injectable } from '@nestjs/common';
+import { Prisma } from '@prisma/client';
+import { pick } from 'lodash';
 import { PrismaService } from '../prisma/prisma.service';
 
 @Injectable()
@@ -10,8 +12,10 @@ export class TextbookService {
     return this.prisma.textbook.create(createTextbookDto);
   }
 
-  findAll() {
-    return `This action returns all textbook`;
+  async findAll(params: Prisma.TextbookFindManyArgs) {
+    const total = await this.prisma.textbook.count(pick(params, 'where'));
+    const data = await this.prisma.textbook.findMany(params);
+    return { data, total };
   }
 
   findOne(id: number) {

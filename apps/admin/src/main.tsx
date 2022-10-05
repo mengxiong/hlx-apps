@@ -8,6 +8,8 @@ import { routes } from './routess';
 import { request } from './request';
 import { Theme } from './theme';
 
+// TODO: 不使用 antd, 不好看, 和mui切换不好用
+
 const element = document.getElementById('root')!;
 
 ReactDOM.createRoot(element).render(

@@ -17,8 +17,6 @@ declare module 'react-router-dom' {
   }
 }
 
-// TODO: 不使用 antd, 不好看, 和mui切换不好用
-
 export const routes: RouteObject[] = [
   { path: '/login', element: <LoginPage /> },
   {
