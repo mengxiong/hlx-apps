@@ -15,12 +15,12 @@ const LinkBehavior = React.forwardRef<
 const theme = createTheme({
   palette: {
     primary: {
-      // light: will be calculated from palette.primary.main,
-      main: '#0072e5',
-      // dark: '#ff870f',
-      // contrastText: '#fff',
-      // dark: will be calculated from palette.primary.main,
-      // contrastText: will be calculated to contrast with palette.primary.main
+      main: 'rgb(3, 201, 215)',
+      contrastText: '#fff',
+    },
+    secondary: {
+      main: 'rgb(251, 150, 120)',
+      contrastText: '#fff',
     },
     background: {
       default: '#fafafa',

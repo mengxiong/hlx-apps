@@ -4,7 +4,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import { useState } from 'react';
 import { Header } from './Header';
 import { Slider } from './Slider';
-import { Breadcrumbs } from './Breadcrumbs';
+// import { Breadcrumbs } from './Breadcrumbs';
 
 export function Layout() {
   const theme = useTheme();
@@ -13,38 +13,35 @@ export function Layout() {
   const [open, setOpen] = useState(false);
 
   return (
-    <Box sx={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
-      <Header>
-        {sm && (
-          <IconButton
-            color="inherit"
-            edge="start"
-            onClick={() => setOpen(!open)}
-            sx={{ display: { sm: 'none' } }}
-          >
+    <Box sx={{ display: 'flex', height: '100%' }}>
+      {sm ? (
+        <Drawer
+          variant="temporary"
+          open={open}
+          onClose={() => setOpen(false)}
+          ModalProps={{
+            keepMounted: true,
+          }}
+        >
+          <Slider onClick={() => setOpen(false)} />
+        </Drawer>
+      ) : (
+        <Drawer
+          variant="permanent"
+          PaperProps={{ sx: { position: 'relative', zIndex: 0 } }}
+          open={open}
+        >
+          <Slider />
+        </Drawer>
+      )}
+      <Box sx={{ display: 'flex', flexDirection: 'column', flex: 1, height: '100%' }}>
+        <Header>
+          <IconButton color="inherit" edge="start" onClick={() => setOpen(!open)}>
             <MenuIcon />
           </IconButton>
-        )}
-      </Header>
-      <Box sx={{ display: 'flex', flex: 1, overflow: 'hidden' }}>
-        {sm ? (
-          <Drawer
-            variant="temporary"
-            open={open}
-            onClose={() => setOpen(false)}
-            ModalProps={{
-              keepMounted: true,
-            }}
-          >
-            <Slider onClick={() => setOpen(false)} />
-          </Drawer>
-        ) : (
-          <Drawer variant="permanent" PaperProps={{ sx: { position: 'relative', zIndex: 0 } }} open>
-            <Slider />
-          </Drawer>
-        )}
-        <Container sx={{ flex: 1, overflow: 'auto', py: 2 }}>
-          <Breadcrumbs />
+        </Header>
+        <Container fixed={false} sx={{ position: 'relative', flex: 1, overflow: 'auto', py: 2 }}>
+          {/* <Breadcrumbs /> */}
           <Outlet />
         </Container>
       </Box>

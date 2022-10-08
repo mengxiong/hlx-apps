@@ -4,5 +4,6 @@
   },
   "extends": "../../tsconfig.json",
   "include": ["**/*.ts", "**/*.tsx"],
-  "types": ["node"]
+  "types": ["node"],
+  "files": ["../../types/vite-env.d.ts"]
 }

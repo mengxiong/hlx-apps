@@ -38,22 +38,14 @@ export function Slider({ onClick }: { onClick?: VoidFunction }) {
   return (
     <List
       sx={{
+        p: 2,
         width: 240,
       }}
       component="nav"
     >
       {sidebar.map((item) => (
         <ListItem key={item.path} disablePadding>
-          <ListItemButton
-            selected={selectedKey === item.path}
-            onClick={() => handleClick(item)}
-            sx={(theme) => ({
-              '&.Mui-selected': {
-                color: theme.palette.primary.main,
-                backgroundColor: 'transparent',
-              },
-            })}
-          >
+          <ListItemButton selected={selectedKey === item.path} onClick={() => handleClick(item)}>
             <ListItemIcon sx={{ minWidth: 35, color: 'inherit' }}>{item.icon}</ListItemIcon>
             <ListItemText primary={item.name} />
           </ListItemButton>

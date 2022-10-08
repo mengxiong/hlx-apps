@@ -31,5 +31,9 @@ export function Breadcrumbs() {
     );
   });
 
-  return <BreadcrumbComponent aria-label="breadcrumb">{list}</BreadcrumbComponent>;
+  return (
+    <BreadcrumbComponent sx={{ mb: 2 }} aria-label="breadcrumb">
+      {list}
+    </BreadcrumbComponent>
+  );
 }

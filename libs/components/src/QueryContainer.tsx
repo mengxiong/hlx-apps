@@ -1,10 +1,13 @@
 import React, { useLayoutEffect, useRef, useState } from 'react';
-import { UseQueryResult } from '@tanstack/react-query';
 import { Box, BoxProps, CircularProgress, Fade, Typography } from '@mui/material';
 import EmptyImage from './empty.svg';
 
-export interface QueryContainerProps extends BoxProps {
-  isEmpty?: boolean;
+export interface QueryContainerProps<T> {
+  isEmpty?: (data: T) => boolean;
+  isLoading?: boolean;
+  error?: Error;
+  wrapStateElement?: (element: React.ReactNode) => React.ReactNode;
+  data: T;
 }
 
 const isDefaultEmpty = (value: unknown) => {
@@ -68,8 +71,17 @@ function ErrorState({ error }: { error: Error }) {
   );
 }
 
-export function QueryContainer(props: QueryContainerProps & UseQueryResult) {
-  const { error, isLoading, isSuccess, children, data, sx } = props;
+export function QueryContainer<T>(props: QueryContainerProps<T> & BoxProps) {
+  const {
+    error,
+    isLoading,
+    data,
+    isEmpty = isDefaultEmpty,
+    wrapStateElement,
+    sx,
+    children,
+    ...restProps
+  } = props;
   const timeoutRef = useRef<number>();
 
   const [loadingVisible, setLoadingVisible] = useState(false);
@@ -88,13 +100,13 @@ export function QueryContainer(props: QueryContainerProps & UseQueryResult) {
     };
   }, [isLoading]);
 
-  const isEmpty = props.isEmpty === undefined ? isDefaultEmpty(data) : props.isEmpty;
-
-  let content: React.ReactNode = children;
+  let stateElement: React.ReactNode;
   if (error) {
-    content = <ErrorState error={error as Error} />;
-  } else if (isSuccess && isEmpty) {
-    content = <EmptyState />;
+    stateElement = <ErrorState error={error as Error} />;
+  } else if (!isLoading && isEmpty(data)) {
+    stateElement = <EmptyState />;
+  } else if (loadingVisible) {
+    stateElement = <Loading />;
   }
 
   return (
@@ -105,9 +117,10 @@ export function QueryContainer(props: QueryContainerProps & UseQueryResult) {
         opacity: loadingVisible ? 0.5 : undefined,
         ...sx,
       }}
+      {...restProps}
     >
-      {content}
-      {loadingVisible && <Loading />}
+      {children}
+      {wrapStateElement && stateElement ? wrapStateElement(stateElement) : stateElement}
     </Box>
   );
 }

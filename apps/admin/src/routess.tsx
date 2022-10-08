@@ -3,7 +3,7 @@ import { AuthRequired } from '@hlx/frame';
 import MenuBookIcon from '@mui/icons-material/MenuBook';
 import { LoginPage } from './pages/login';
 import { Layout } from './layout/Layout';
-import { CreateTextbook } from './pages/textbook/CreateTextbook';
+import { Textbook } from './pages/textbook';
 
 export interface RouteHandle {
   nav?: string;
@@ -29,7 +29,7 @@ export const routes: RouteObject[] = [
     children: [
       {
         path: 'textbook',
-        element: <CreateTextbook />,
+        element: <Textbook />,
         handle: {
           nav: '课程管理',
           icon: <MenuBookIcon />,

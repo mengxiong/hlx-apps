@@ -1,4 +1,5 @@
-import { CreateTextbookDto } from '@hlx/dto';
+import { CreateTextbookDto, FindAllTextbookDto } from '@hlx/dto';
+import { Textbook } from '@prisma/client';
 import { RestApi } from './restApi';
 
-export const textbookApi = new RestApi<CreateTextbookDto>('textbook');
+export const textbookApi = new RestApi<Textbook, CreateTextbookDto, FindAllTextbookDto>('textbook');

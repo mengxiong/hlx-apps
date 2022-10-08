@@ -1,6 +1,6 @@
 import { request } from '../request';
 
-export class RestApi<CreateBody = any> {
+export class RestApi<Data = any, CreateBody = any, FindAll = any> {
   private path: string;
 
   constructor(path: string) {
@@ -11,8 +11,8 @@ export class RestApi<CreateBody = any> {
     return request.post(this.path, body);
   };
 
-  findAll = () => {
-    return request.get(this.path);
+  findAll = (params?: FindAll) => {
+    return request.get<any, { total: number; data: Data[] }>(this.path, { params });
   };
 
   findOne = (id: string | number) => {
