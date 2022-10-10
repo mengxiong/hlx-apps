@@ -53,7 +53,7 @@ export function Modal({
       <DialogActions disableSpacing sx={{ py: 1 }}>
         <Button onClick={onClose}>{cancelButtonText}</Button>
         {onConfirm && (
-          <LoadingButton loading={confirmLoading} onClick={onConfirm}>
+          <LoadingButton variant="contained" loading={confirmLoading} onClick={onConfirm}>
             {confirmButtonText}
           </LoadingButton>
         )}

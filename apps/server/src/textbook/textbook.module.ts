@@ -4,6 +4,6 @@ import { TextbookController } from './textbook.controller';
 
 @Module({
   controllers: [TextbookController],
-  providers: [TextbookService]
+  providers: [TextbookService],
 })
 export class TextbookModule {}

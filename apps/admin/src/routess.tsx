@@ -4,6 +4,7 @@ import MenuBookIcon from '@mui/icons-material/MenuBook';
 import { LoginPage } from './pages/login';
 import { Layout } from './layout/Layout';
 import { Textbook } from './pages/textbook';
+import { Units } from './pages/textbook/Units';
 
 export interface RouteHandle {
   nav?: string;
@@ -35,6 +36,10 @@ export const routes: RouteObject[] = [
           icon: <MenuBookIcon />,
           breadcrumb: true,
         },
+      },
+      {
+        path: 'textbook/:id',
+        element: <Units />,
       },
     ],
   },

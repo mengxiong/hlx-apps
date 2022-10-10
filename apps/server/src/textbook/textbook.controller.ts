@@ -1,5 +1,5 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete, Query } from '@nestjs/common';
-import { CreateTextbookDto, FindAllTextbookDto, ListAllEntities } from '@hlx/dto';
+import { CreateTextbookDto, FindAllTextbookDto } from '@hlx/dto';
 import { TextbookService } from './textbook.service';
 import { Roles } from '../auth/guard/roles';
 

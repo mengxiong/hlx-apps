@@ -17,8 +17,8 @@ export class TextbookService {
     return { data, total };
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} textbook`;
+  async findOne(id: number) {
+    return this.prisma.textbook.findUnique({ where: { id }, include: { units: true } });
   }
 
   update(id: number, updateTextbookDto: any) {

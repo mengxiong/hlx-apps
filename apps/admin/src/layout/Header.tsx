@@ -1,4 +1,4 @@
-import { AppBar, Toolbar, IconButton, Menu, MenuItem, Avatar, Divider, Link } from '@mui/material';
+import { Toolbar, IconButton, Menu, MenuItem, Avatar, Divider, Link } from '@mui/material';
 import { useState } from 'react';
 import { useAuth } from '@hlx/frame';
 
@@ -15,14 +15,7 @@ export function Header({ children }: { children?: React.ReactNode }) {
   };
 
   return (
-    // <AppBar
-    //   position="static"
-    //   sx={{
-    //     position: 'relative',
-    //     zIndex: 1,
-    //   }}
-    // >
-    <Toolbar>
+    <Toolbar sx={{ background: '#fff', borderBottom: '1px solid rgba(0, 0, 0, 0.12)' }}>
       {children}
       <Link
         href="/"
@@ -64,6 +57,5 @@ export function Header({ children }: { children?: React.ReactNode }) {
         </MenuItem>
       </Menu>
     </Toolbar>
-    // </AppBar>
   );
 }

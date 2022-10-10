@@ -1,10 +1,9 @@
 import { Outlet } from 'react-router-dom';
-import { Box, Container, Drawer, IconButton, useMediaQuery, useTheme } from '@mui/material';
+import { Box, Drawer, IconButton, useMediaQuery, useTheme } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import { useState } from 'react';
 import { Header } from './Header';
 import { Slider } from './Slider';
-// import { Breadcrumbs } from './Breadcrumbs';
 
 export function Layout() {
   const theme = useTheme();
@@ -40,10 +39,7 @@ export function Layout() {
             <MenuIcon />
           </IconButton>
         </Header>
-        <Container fixed={false} sx={{ position: 'relative', flex: 1, overflow: 'auto', py: 2 }}>
-          {/* <Breadcrumbs /> */}
-          <Outlet />
-        </Container>
+        <Outlet />
       </Box>
     </Box>
   );

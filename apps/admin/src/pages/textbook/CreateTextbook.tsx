@@ -1,5 +1,5 @@
+import { Modal } from '@hlx/components';
 import { useMuiForm } from '@hlx/hooks';
-import { LoadingButton } from '@mui/lab';
 import { Box, Button, MenuItem } from '@mui/material';
 import { Platform, Textbook } from '@prisma/client';
 import { useMutation } from '@tanstack/react-query';
@@ -7,7 +7,10 @@ import { useDropzone } from 'react-dropzone';
 import { read, utils } from 'xlsx';
 import { textbookApi } from '../../api/textbook';
 
-export interface CreateTextbookProps {}
+export interface CreateTextbookProps {
+  open: boolean;
+  onClose: () => void;
+}
 
 export const platforms = [
   { label: '全部', value: Platform.ALL },
@@ -76,7 +79,7 @@ const getObjByMap = (map: Record<string, any>, source: any) => {
   return result;
 };
 
-export function CreateTextbook(props: CreateTextbookProps) {
+export function CreateTextbook({ open, onClose }: CreateTextbookProps) {
   const { handleSubmit, formItems } = useMuiForm<Textbook>({
     items: [
       { label: '标题', name: 'title', rules: { required: '标题不能为空' } },
@@ -114,7 +117,7 @@ export function CreateTextbook(props: CreateTextbookProps) {
   });
 
   const create = useMutation(textbookApi.create, {
-    onSuccess(data) {},
+    onSuccess() {},
   });
 
   const { acceptedFiles, getRootProps, getInputProps } = useDropzone({
@@ -163,7 +166,13 @@ export function CreateTextbook(props: CreateTextbookProps) {
   };
 
   return (
-    <Box>
+    <Modal
+      title="新增课程"
+      open={open}
+      onClose={onClose}
+      onConfirm={submit}
+      confirmLoading={create.isLoading}
+    >
       {formItems}
       <Button
         sx={{
@@ -184,9 +193,6 @@ export function CreateTextbook(props: CreateTextbookProps) {
         <span>点击或拖拽到此处, 上传学习文件</span>
         <Box sx={{ color: 'text.disabled' }}>{acceptedFiles[0]?.name}</Box>
       </Button>
-      <LoadingButton variant="contained" loading={create.isLoading} onClick={submit}>
-        提交了
-      </LoadingButton>
-    </Box>
+    </Modal>
   );
 }

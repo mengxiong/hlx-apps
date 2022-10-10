@@ -7,12 +7,14 @@ import {
   TableCell,
   Paper,
 } from '@mui/material';
+import dayjs from 'dayjs';
 import { QueryContainer } from './QueryContainer';
 
 export interface MxTableColProps<T> {
   field: keyof T | 'actions';
   title?: string;
-  render?: (row: T) => React.ReactNode;
+  render?: (row: T, value: any) => React.ReactNode;
+  type?: 'datetime';
 }
 
 export type MxTableCols<T> = MxTableColProps<T>[];
@@ -57,9 +59,14 @@ export function MxTable<T extends Record<string, any> = any>({
           {rows.map((row) => (
             <TableRow key={row[rowKey]}>
               {columns.map((col) => {
-                let content: React.ReactNode = row[col.field];
+                const value = row[col.field];
+                let content: React.ReactNode;
                 if (col.render) {
-                  content = col.render(row);
+                  content = col.render(row, value);
+                } else if (col.type === 'datetime') {
+                  content = dayjs(value).format('YYYY-MM-DD HH:mm:ss');
+                } else {
+                  content = value;
                 }
                 return <TableCell key={col.field as string}>{content}</TableCell>;
               })}

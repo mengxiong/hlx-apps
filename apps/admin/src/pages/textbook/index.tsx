@@ -1,11 +1,15 @@
 import { MxTable, MxTableCols } from '@hlx/components';
-import { Box, Button, Stack } from '@mui/material';
+import { Button, Chip, Stack } from '@mui/material';
 import { Textbook as TextbookData } from '@prisma/client';
 import { useQuery } from '@tanstack/react-query';
+import { useState } from 'react';
 import { textbookApi } from '../../api/textbook';
+import { PageContainer } from '../../layout/PageContainer';
+import { CreateTextbook } from './CreateTextbook';
 
 export function Textbook() {
   const { isLoading, error, data } = useQuery(['textbooks'], () => textbookApi.findAll());
+  const [open, setOpen] = useState(false);
 
   const rows = data?.data;
 
@@ -16,8 +20,14 @@ export function Textbook() {
     { title: '平台', field: 'platform' },
     { title: '有效天数', field: 'validDays' },
     { title: '扣除点数', field: 'cost' },
-    { title: '状态', field: 'published' },
-    { title: '创建时间', field: 'createdAt' },
+    {
+      title: '状态',
+      field: 'published',
+      render: (row, value: boolean) => (
+        <Chip label={value ? '已发布' : '未发布'} color={value ? 'success' : 'default'} />
+      ),
+    },
+    { title: '创建时间', field: 'createdAt', type: 'datetime' },
     {
       title: '操作',
       field: 'actions',
@@ -32,11 +42,15 @@ export function Textbook() {
   ];
 
   return (
-    <Box sx={{}}>
-      <Button sx={{ right: 0 }} variant="contained">
-        新增课程
-      </Button>
+    <PageContainer
+      actions={
+        <Button onClick={() => setOpen(true)} variant="contained">
+          新增课程
+        </Button>
+      }
+    >
       <MxTable columns={columns} isLoading={isLoading} error={error} rows={rows} />
-    </Box>
+      <CreateTextbook open={open} onClose={() => setOpen(false)} />
+    </PageContainer>
   );
 }

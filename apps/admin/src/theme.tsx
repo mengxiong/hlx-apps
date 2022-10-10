@@ -14,17 +14,17 @@ const LinkBehavior = React.forwardRef<
 
 const theme = createTheme({
   palette: {
-    primary: {
-      main: 'rgb(3, 201, 215)',
-      contrastText: '#fff',
-    },
-    secondary: {
-      main: 'rgb(251, 150, 120)',
-      contrastText: '#fff',
-    },
-    background: {
-      default: '#fafafa',
-    },
+    // primary: {
+    //   main: 'rgb(3, 201, 215)',
+    //   contrastText: '#fff',
+    // },
+    // secondary: {
+    //   main: 'rgb(251, 150, 120)',
+    //   contrastText: '#fff',
+    // },
+    // background: {
+    //   default: '#fafafa',
+    // },
   },
   components: {
     MuiLink: {
